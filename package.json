@@ -1,6 +1,6 @@
 {
   "name": "webpack-encoding-plugin",
-  "version": "0.3.0-internal",
+  "version": "0.3.0-internal-2",
   "description": "Control Webpacks output encoding",
   "main": "EncodingPlugin.js",
   "scripts": {
