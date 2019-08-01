@@ -1,28 +1,25 @@
 # Webpack Encoding Plugin
 
 Take control over the encoding of emitted webpack assets.
-This can be useful, if the delivering webserver enforces a specific content-type,
-so that your js-code is not interpreted as utf-8 by the browser.
+This can be useful, if the delivering webserver enforces a specific content-type, so that your js-code is not interpreted as utf-8 by the browser.
 
 ## Usage
 
-install module
+Install package
 
     npm install encoding-plugin
 
-setup webpack config
+Setup webpack config
 
 ``` javascript
 const EncodingPlugin = require('encoding-plugin');
 module.exports = {
-    entry: './entry.js',
-    output: {
-        path: '../dist',
-        filename: 'bundle.js'
-    },
-    plugins: [new EncodingPlugin({
-        encoding: 'iso-8859-1'
-    })]
+  // ...
+  plugins: [
+    new EncodingPlugin({
+      encoding: 'iso-8859-1',
+    }),
+  ],
 };
 ```
 
