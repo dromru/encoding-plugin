@@ -4,5 +4,5 @@
 
 
 module.exports = {
-    testString: "string mit Ömlauten"
+  testString: "string mit Ömlauten"
 };

@@ -1,7 +1,8 @@
 # Webpack Encoding Plugin
 
 Take control over the encoding of emitted webpack assets.
-This can be useful, if the delivering webserver enforces a specific content-type, so that your js-code is not interpreted as utf-8 by the browser.
+This can be useful, if the delivering webserver enforces a specific content-type,
+so that your js-code is not interpreted as utf-8 by the browser.
 
 ## Usage
 
@@ -14,7 +15,6 @@ Setup webpack config
 ``` javascript
 const EncodingPlugin = require('encoding-plugin');
 module.exports = {
-  // ...
   plugins: [
     new EncodingPlugin({
       encoding: 'iso-8859-1',
@@ -32,3 +32,17 @@ Additional options:
 
 The Plugin uses [iconv-lite](https://www.npmjs.com/package/iconv-lite) to handle the encoding.
 A list of supported encodings can be found [here](https://github.com/ashtuchkin/iconv-lite/wiki/Supported-Encodings)
+
+## webpack-dev-server
+
+To use non-utf-8 encoding with webpack-dev-server, you must set the appropriate charset like so:
+
+``` JavaScript
+devServer:  {
+   headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/javascript; charset=windows-1251'
+   }
+   // ...
+}
+```
