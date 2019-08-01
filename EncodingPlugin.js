@@ -16,10 +16,22 @@ class EncodingPlugin {
     }
 
     apply(compiler) {
-        const { options } = this;
+        const { options, constructor: { name: pluginName } } = this;
         const matchFileName = ModuleFilenameHelpers.matchObject.bind(undefined, options);
 
-        compiler.hooks.emit.tapAsync('EncodingPlugin', ({ assets, errors }, callback) => {
+        compiler.hooks.compilation.tap(
+            pluginName, compilation => {
+                ['jsonpScript', 'hotBootstrap'].forEach(id => {
+                    const hook = compilation.mainTemplate.hooks[id];
+                    if (hook) {
+                        hook.tap(pluginName, s => s.replace(/(["'])utf-8["']/gi, `$1${options.encoding}$1`));
+                    }
+                });
+                return compilation;
+            }
+        );
+
+        compiler.hooks.emit.tapAsync(pluginName, ({ assets, errors }, callback) => {
             Object.keys(assets).filter(matchFileName).forEach(file => {
                 const asset = assets[file];
                 let source;
@@ -45,7 +57,7 @@ class EncodingPlugin {
                         new SourceMapSource(encodedSource, file, map) :
                         new RawSource(encodedSource);
                 } catch (e) {
-                    errors.push(new Error(`${file} from EncodingPlugin: ${e.message}`));
+                    errors.push(new Error(`${file} from ${pluginName}: ${e.message}`));
                 }
             });
 
