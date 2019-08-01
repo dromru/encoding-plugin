@@ -8,12 +8,12 @@ so that your js-code is not interpreted as utf-8 by the browser.
 
 install module
 
-    npm install webpack-encoding-plugin
+    npm install encoding-plugin
 
 setup webpack config
 
 ``` javascript
-const EncodingPlugin = require('webpack-encoding-plugin');
+const EncodingPlugin = require('encoding-plugin');
 module.exports = {
     entry: './entry.js',
     output: {
