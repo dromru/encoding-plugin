@@ -13,6 +13,8 @@ const encoding = require('encoding');
 
 const fixture = (path = '') => pathlib.join(__dirname, '__fixtures__', path);
 const dist = (path = '') => pathlib.join(process.cwd(), 'dist', path);
+const decode = buf => encoding.convert(buf, SOURCE_CHARSET, TARGET_CHARSET).toString(SOURCE_CHARSET);
+const readDist = path => fs => fs.readFileSync(dist(path));
 
 const compile = config =>
   new Promise((resolve, reject) => {
@@ -44,8 +46,8 @@ describe('EncodingPlugin', () => {
 
     await expect(
       compile(config)
-        .then(fs => fs.readFileSync(dist('main.js')))
-        .then(buf => encoding.convert(buf, SOURCE_CHARSET, TARGET_CHARSET).toString(SOURCE_CHARSET))
+        .then(readDist('main.js'))
+        .then(decode)
     ).resolves.toMatchSnapshot();
   });
 });
