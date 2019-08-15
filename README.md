@@ -1,5 +1,7 @@
 # Webpack Encoding Plugin
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/dromru/encoding-plugin.svg)](https://greenkeeper.io/)
+
 Take control over the encoding of emitted webpack assets.
 This can be useful, if the delivering webserver enforces a specific content-type,
 so that your js-code is not interpreted as utf-8 by the browser.
