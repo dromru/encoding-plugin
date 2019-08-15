@@ -47,18 +47,18 @@ jobs:
           command: YARN_AUTH_TOKEN=$NPM_TOKEN yarn publish --non-interactive
 
 workflows:
-  version: 2.1
+  version: 2
   test-deploy:
     jobs:
       - test:
           filters:
             tags:
-              only: /^v.*/
+              only: /v[0-9]+(\.[0-9]+)*/
       - deploy:
           requires:
             - test
           filters:
             tags:
-              only: /^v.*/
+              only: /v[0-9]+(\.[0-9]+)*/
             branches:
-              ignore: /.*/
+              only: master
