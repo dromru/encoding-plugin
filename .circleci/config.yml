@@ -10,7 +10,7 @@ orbs:
 
 jobs:
   test:
-  <<: *defaults
+    <<: *defaults
     steps:
       - checkout
 
