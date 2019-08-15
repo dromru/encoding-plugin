@@ -1,25 +1,64 @@
 version: 2.1
+
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:lts
+
 orbs:
   codecov: codecov/codecov@1.0.5
+
 jobs:
-  build:
-    docker:
-      - image: circleci/node:lts
-    working_directory: ~/repo
+  test:
+  <<: *defaults
     steps:
       - checkout
+
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
+
       - run: yarn install
+      - run:
+          name: "Run tests and collect coverage report"
+          command: yarn test --bail --ci --coverage
+
+      - codecov/upload:
+          file: coverage/*.json
+          conf: codecov.yml
+
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+
+  deploy:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
       - run:
-          name: "Run tests and collect coverage report"
-          command: yarn test --ci --coverage
-      - codecov/upload:
-          file: coverage/*.json
-          conf: codecov.yml
+          name: Publish package
+          command: YARN_AUTH_TOKEN=$NPM_TOKEN yarn publish --non-interactive
+
+workflows:
+  version: 2.1
+  test-deploy:
+    jobs:
+      - test:
+          filters:
+            tags:
+              only: /^v.*/
+      - deploy:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
