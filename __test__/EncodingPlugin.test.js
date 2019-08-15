@@ -8,13 +8,16 @@ const TARGET_CHARSET = 'windows-1251';
 const webpack = require('webpack');
 const MemoryFS = require('memory-fs');
 const pathlib = require('path');
-const EncodingPlugin = require('../EncodingPlugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const encoding = require('encoding');
+const EncodingPlugin = require('../EncodingPlugin');
 
 const fixture = (path = '') => pathlib.join(__dirname, '__fixtures__', path);
 const dist = (path = '') => pathlib.join(process.cwd(), 'dist', path);
-const decode = buf => encoding.convert(buf, SOURCE_CHARSET, TARGET_CHARSET).toString(SOURCE_CHARSET);
+const decode = buf =>
+  encoding
+    .convert(buf, SOURCE_CHARSET, TARGET_CHARSET)
+    .toString(SOURCE_CHARSET);
 const readDist = path => fs => fs.readFileSync(dist(path));
 
 const compile = ({ plugins, ...config }, pluginConfig) =>
@@ -30,14 +33,18 @@ const compile = ({ plugins, ...config }, pluginConfig) =>
         minimize: false,
       },
       plugins: [
-        ...(plugins ? plugins : []),
-        new EncodingPlugin(pluginConfig ? { ...pluginConfig, encoding: TARGET_CHARSET } : TARGET_CHARSET),
+        ...(plugins || []),
+        new EncodingPlugin(
+          pluginConfig
+            ? { ...pluginConfig, encoding: TARGET_CHARSET }
+            : TARGET_CHARSET
+        ),
       ],
-      ...config
+      ...config,
     });
     compiler.outputFileSystem = fs;
     compiler.run((err, stats) => {
-      if (process.env.VERBOSE) console.log(stats.toString());
+      if (process.env.VERBOSE) console.log(stats.toString()); // eslint-disable-line no-console
       if (err) reject(err);
       resolve(fs);
     });
@@ -88,10 +95,12 @@ describe('EncodingPlugin', () => {
     };
 
     await expect(
-      compile(config).then(fs => [
-        String(readDist(filenameJs)(fs)), // no decoding
-        decode(readDist(filenameCss)(fs))
-      ].join('\n\n'))
+      compile(config).then(fs =>
+        [
+          String(readDist(filenameJs)(fs)), // no decoding
+          decode(readDist(filenameCss)(fs)),
+        ].join('\n\n')
+      )
     ).resolves.toMatchSnapshot();
   });
 });
