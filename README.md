@@ -1,6 +1,6 @@
 # Webpack Encoding Plugin
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/dromru/encoding-plugin.svg)](https://greenkeeper.io/) [![CircleCI](https://circleci.com/gh/dromru/encoding-plugin.svg?style=svg)](https://circleci.com/gh/dromru/encoding-plugin)
+[![Greenkeeper badge](https://badges.greenkeeper.io/dromru/encoding-plugin.svg)](https://greenkeeper.io/) [![CircleCI](https://circleci.com/gh/dromru/encoding-plugin.svg?style=svg)](https://circleci.com/gh/dromru/encoding-plugin) [![codecov](https://codecov.io/gh/dromru/encoding-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/dromru/encoding-plugin) [![npm](https://img.shields.io/npm/v/encoding-plugin.svg)](https://www.npmjs.com/package/encoding-plugin)
 
 Take control over the encoding of emitted webpack assets.
 This can be useful, if the delivering webserver enforces a specific content-type,
