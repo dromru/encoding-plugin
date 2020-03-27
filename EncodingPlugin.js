@@ -25,11 +25,11 @@ class EncodingPlugin {
       options
     );
 
-    compiler.hooks.compilation.tap(pluginName, compilation => {
-      ['jsonpScript', 'hotBootstrap'].forEach(id => {
+    compiler.hooks.compilation.tap(pluginName, (compilation) => {
+      ['jsonpScript', 'hotBootstrap'].forEach((id) => {
         const hook = compilation.mainTemplate.hooks[id];
         if (hook) {
-          hook.tap(pluginName, s =>
+          hook.tap(pluginName, (s) =>
             s.replace(/(["'])utf-8["']/gi, `$1${options.encoding}$1`)
           );
         }
@@ -40,7 +40,7 @@ class EncodingPlugin {
     compiler.hooks.emit.tapAsync(pluginName, ({ assets, errors }, callback) => {
       Object.keys(assets)
         .filter(matchFileName)
-        .forEach(file => {
+        .forEach((file) => {
           const asset = assets[file];
           let source;
           let map;
