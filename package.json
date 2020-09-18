@@ -33,6 +33,6 @@
   "dependencies": {
     "encoding": "^0.1.13",
     "webpack": "^4.44.2",
-    "webpack-sources": "^1.4.1"
+    "webpack-sources": "^2.0.0"
   }
 }
