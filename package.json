@@ -20,7 +20,7 @@
   "license": "MIT",
   "devDependencies": {
     "css-loader": "^5.0.1",
-    "eslint": "7.15.0",
+    "eslint": "7.16.0",
     "eslint-config-airbnb-base": "14.2.1",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-import": "^2.22.1",
