@@ -1,6 +1,6 @@
 {
   "name": "encoding-plugin",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Control Webpack output encoding",
   "license": "MIT",
   "repository": "dromru/encoding-plugin",
