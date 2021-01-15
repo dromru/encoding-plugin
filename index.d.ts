@@ -6,7 +6,7 @@ export = EncodingPlugin;
  * Take control over the encoding of emitted `webpack` assets.
  */
 declare class EncodingPlugin implements WebpackPluginInstance {
-  constructor(options?: EncodingPlugin.Options);
+  constructor(options: EncodingPlugin.Options);
   apply(compiler: Compiler): void;
 }
 
