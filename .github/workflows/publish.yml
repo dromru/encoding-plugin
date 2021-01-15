@@ -1,0 +1,29 @@
+name: publish
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@01aecccf739ca6ff86c0539fbc67a7a5007bbc81
+      - uses: actions/setup-node@c46424eee26de4078d34105d3de3cc4992202b1e
+        with:
+          node-version: 12
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache dependencies
+        uses: actions/cache@70655ec8323daeeaa7ef06d7c56e1b9191396cbe
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - run: yarn install
+      - run: yarn test:only --bail --ci
+      - run: yarn publish --non-interactive
+        env:
+          YARN_NPM_AUTH_TOKEN: ${{secrets.npm_token}}
