@@ -34,13 +34,13 @@ module.exports = {
 
 |                         Name                          |                   Type                    |          Default          | Description                                                                          |
 | :---------------------------------------------------: | :---------------------------------------: | :-----------------------: | :----------------------------------------------------------------------------------- |
-|             **[`encoding`](#encoding)**               |                `{String}`                 |        `undefined`        | Target encoding                                                                      |
-|                  **[`test`](#test)**                  | `{String\|RegExp\|Array<String\|RegExp>}` | `/(\.js|\.css)(\?.*)?$/i` | Include all assets that pass test assertion                                          |
-|               **[`include`](#include)**               | `{String\|RegExp\|Array<String\|RegExp>}` |        `undefined`        | Include all assets matching any of these conditions                                  |
-|               **[`exclude`](#exclude)**               | `{String\|RegExp\|Array<String\|RegExp>}` |        `undefined`        | Exclude all assets matching any of these conditions                                  |
-|              **[`filename`](#filename)**              |           `{String\|Function}`            |        `undefined`        | The target asset filename                                                            |
-| **[`patchWebpackBootstrap`](#patchWebpackBootstrap)** |                `{Boolean}`                |           `true`          | Whether to replace `utf-8` to target encoding from `webpack` runtime code or not     |
-|  **[`deleteOriginalAssets`](#deleteoriginalassets)**  |      `{Boolean\|'keep-source-map'}`       |           `true`          | Whether to delete the original assets or not                                         |
+|             **[`encoding`](#encoding)**               |                `{String}`                 |                `undefined`                | Target encoding                                                                      |
+|                  **[`test`](#test)**                  | `{String\|RegExp\|Array<String\|RegExp>}` | <code>/(\.js&#124;\.css)(\?.*)?$/i</code> | Include all assets that pass test assertion                                          |
+|               **[`include`](#include)**               | `{String\|RegExp\|Array<String\|RegExp>}` |                `undefined`                | Include all assets matching any of these conditions                                  |
+|               **[`exclude`](#exclude)**               | `{String\|RegExp\|Array<String\|RegExp>}` |                `undefined`                | Exclude all assets matching any of these conditions                                  |
+|              **[`filename`](#filename)**              |           `{String\|Function}`            |                `undefined`                | The target asset filename                                                            |
+| **[`patchWebpackBootstrap`](#patchWebpackBootstrap)** |                `{Boolean}`                |                  `true`                   | Whether to replace `utf-8` to target encoding from `webpack` runtime code or not     |
+|  **[`deleteOriginalAssets`](#deleteoriginalassets)**  |      `{Boolean\|'keep-source-map'}`       |                  `true`                   | Whether to delete the original assets or not                                         |
 
 ### `encoding`
 
