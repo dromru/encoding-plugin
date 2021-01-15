@@ -28,4 +28,4 @@ jobs:
       - run: yarn test:only --bail --ci
       - run: yarn publish --non-interactive
         env:
-          YARN_NPM_AUTH_TOKEN: ${{secrets.npm_token}}
+          NPM_AUTH_TOKEN: ${{secrets.npm_token}}
