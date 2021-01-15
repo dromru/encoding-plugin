@@ -26,6 +26,4 @@ jobs:
             ${{ runner.os }}-yarn-
       - run: yarn install
       - run: yarn test:only --bail --ci
-      - run: yarn publish --non-interactive
-        env:
-          YARN_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: YARN_AUTH_TOKEN=${{ secrets.NPM_TOKEN }} yarn publish --non-interactive
