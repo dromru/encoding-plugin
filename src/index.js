@@ -23,7 +23,6 @@ class EncodingPlugin {
       exclude,
       filename,
       patchWebpackBootstrap = true,
-      deleteOriginalAssets = true,
     } = options;
 
     this.options = {
@@ -33,7 +32,6 @@ class EncodingPlugin {
       exclude,
       filename,
       patchWebpackBootstrap,
-      deleteOriginalAssets,
     };
   }
 
@@ -64,7 +62,7 @@ class EncodingPlugin {
             !compiler.webpack.ModuleFilenameHelpers.matchObject.bind(
               // eslint-disable-next-line no-undefined
               undefined,
-              this.options
+              this.options,
             )(name)
           ) {
             return false;
@@ -79,7 +77,7 @@ class EncodingPlugin {
               name,
               encoding: this.options.encoding,
             }),
-            cache.getLazyHashedEtag(source)
+            cache.getLazyHashedEtag(source),
           );
           const output = (await cacheItem.getPromise()) || {};
 
@@ -112,7 +110,7 @@ class EncodingPlugin {
             cacheItem,
             relatedName: RELATED_NAME,
           };
-        })
+        }),
       )
     ).filter(Boolean);
 
@@ -157,11 +155,11 @@ class EncodingPlugin {
             const replacerBase = path.basename(replacerFile);
             const replacerName = replacerBase.slice(
               0,
-              replacerBase.length - replacerExt.length
+              replacerBase.length - replacerExt.length,
             );
             const replacerPath = replacerFile.slice(
               0,
-              replacerFile.length - replacerBase.length
+              replacerFile.length - replacerBase.length,
             );
             const pathData = {
               file: replacerFile,
@@ -179,7 +177,7 @@ class EncodingPlugin {
 
             newName = newFilename.replace(
               /\[(file|query|fragment|path|base|name|ext)]/g,
-              (p0, p1) => pathData[p1]
+              (p0, p1) => pathData[p1],
             );
           }
 
@@ -189,22 +187,15 @@ class EncodingPlugin {
             newInfo.immutable = true;
           }
 
-          if (this.options.deleteOriginalAssets) {
-            if (this.options.deleteOriginalAssets === 'keep-source-map') {
-              compilation.updateAsset(name, source, {
-                related: { sourceMap: null },
-              });
-            }
-
-            compilation.deleteAsset(name);
-          } else {
+          if (this.options.filename !== undefined && newName !== name) {
+            compilation.emitAsset(newName, output.source, newInfo);
             compilation.updateAsset(name, source, {
               related: { [relatedName]: newName },
             });
+          } else {
+            compilation.updateAsset(name, output.source, newInfo);
           }
-
-          compilation.emitAsset(newName, output.source, newInfo);
-        })()
+        })(),
       );
     }
 
@@ -222,7 +213,7 @@ class EncodingPlugin {
             compiler.webpack.Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE_TRANSFER,
           additionalAssets: true,
         },
-        (assets) => this.convertAssets(compiler, compilation, assets)
+        (assets) => this.convertAssets(compiler, compilation, assets),
       );
 
       if (this.options.patchWebpackBootstrap) {
@@ -230,7 +221,7 @@ class EncodingPlugin {
           const hook = compilation.mainTemplate.hooks[id];
           if (hook) {
             hook.tap(pluginName, (s) =>
-              s.replace(/(["'])utf-8["']/gi, `$1${this.options.encoding}$1`)
+              s.replace(/(["'])utf-8["']/gi, `$1${this.options.encoding}$1`),
             );
           }
         });
@@ -241,7 +232,9 @@ class EncodingPlugin {
           .for('asset.info.encoded')
           .tap('encoding-webpack-plugin', (encoded, { green, formatFlag }) =>
             // eslint-disable-next-line no-undefined
-            encoded ? green(formatFlag('encoded')) : undefined
+            encoded
+              ? green(formatFlag(`converted to ${this.options.encoding}`))
+              : undefined,
           );
       });
     });

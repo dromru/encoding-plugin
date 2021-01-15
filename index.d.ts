@@ -58,11 +58,5 @@ declare namespace EncodingPlugin {
      * @default true
      */
     patchWebpackBootstrap?: boolean;
-    /**
-     * Whether to delete the original assets or not.
-     *
-     * @default true
-     */
-    deleteOriginalAssets?: boolean | 'keep-source-map';
   }
 }
