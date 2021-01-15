@@ -1,6 +1,6 @@
-/__test__/__fixtures__/**/*
 /coverage
 /dist
 /node_modules
 /test/fixtures
 /test/outputs
+CHANGELOG.md

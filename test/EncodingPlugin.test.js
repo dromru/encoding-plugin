@@ -2,6 +2,8 @@
  * @jest-environment node
  */
 
+import EncodingPlugin from '../src/index';
+
 const SOURCE_CHARSET = 'utf-8';
 const TARGET_CHARSET = 'windows-1251';
 
@@ -10,42 +12,48 @@ const MemoryFS = require('memory-fs');
 const pathlib = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const encoding = require('encoding');
-const EncodingPlugin = require('../EncodingPlugin');
 
-const fixture = (path = '') => pathlib.join(__dirname, '__fixtures__', path);
+const fixture = (path = '') => pathlib.join(__dirname, 'fixtures', path);
 const dist = (path = '') => pathlib.join(process.cwd(), 'dist', path);
-const decode = buf =>
+const decode = (buf) =>
   encoding
     .convert(buf, SOURCE_CHARSET, TARGET_CHARSET)
     .toString(SOURCE_CHARSET);
-const readDist = path => fs => fs.readFileSync(dist(path));
+const readDist = (path) => (fs) => fs.readFileSync(dist(path));
 
 const compile = ({ plugins, ...config }, pluginConfig) =>
   new Promise((resolve, reject) => {
     const fs = new MemoryFS();
-    const compiler = webpack({
+    const webpackConfig = {
+      ...config,
       mode: 'production',
       output: {
         publicPath: '',
         path: dist(),
+        ...config.output,
       },
       optimization: {
         minimize: false,
+        ...config.optimization,
       },
       plugins: [
         ...(plugins || []),
-        new EncodingPlugin(
-          pluginConfig
-            ? { ...pluginConfig, encoding: TARGET_CHARSET }
-            : TARGET_CHARSET
-        ),
+        new EncodingPlugin({ ...pluginConfig, encoding: TARGET_CHARSET }),
       ],
-      ...config,
-    });
+    };
+    const compiler = webpack(webpackConfig);
     compiler.outputFileSystem = fs;
     compiler.run((err, stats) => {
       if (process.env.VERBOSE) console.log(stats.toString()); // eslint-disable-line no-console
-      if (err) reject(err);
+      if (err || stats.hasErrors()) {
+        // eslint-disable-next-line no-console
+        console.log(err);
+        if (stats.hasErrors()) {
+          // eslint-disable-next-line no-console
+          console.log(stats.toString());
+        }
+        reject(err);
+      }
       resolve(fs);
     });
   });
@@ -57,9 +65,7 @@ describe('EncodingPlugin', () => {
     };
 
     await expect(
-      compile(config)
-        .then(readDist('main.js'))
-        .then(decode)
+      compile(config).then(readDist('main.js')).then(decode)
     ).resolves.toMatchSnapshot();
   });
 
@@ -69,9 +75,17 @@ describe('EncodingPlugin', () => {
     };
 
     await expect(
-      compile(config)
-        .then(readDist('main.js'))
-        .then(String)
+      compile(config).then(readDist('main.js')).then(String)
+    ).resolves.toMatchSnapshot();
+  });
+
+  it('`utf-8` in runtime scripts related to preload should be replaced', async () => {
+    const config = {
+      entry: fixture('async-import-preload-entry.js'),
+    };
+
+    await expect(
+      compile(config).then(readDist('main.js')).then(String)
     ).resolves.toMatchSnapshot();
   });
 
@@ -95,7 +109,7 @@ describe('EncodingPlugin', () => {
     };
 
     await expect(
-      compile(config).then(fs =>
+      compile(config).then((fs) =>
         [
           String(readDist(filenameJs)(fs)), // no decoding
           decode(readDist(filenameCss)(fs)),
