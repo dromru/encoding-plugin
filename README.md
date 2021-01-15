@@ -40,7 +40,6 @@ module.exports = {
 |               **[`exclude`](#exclude)**               | `{String\|RegExp\|Array<String\|RegExp>}` |        `undefined`        | Exclude all assets matching any of these conditions                                  |
 |              **[`filename`](#filename)**              |           `{String\|Function}`            |        `undefined`        | The target asset filename                                                            |
 | **[`patchWebpackBootstrap`](#patchWebpackBootstrap)** |                `{Boolean}`                |           `true`          | Whether to replace `utf-8` to target encoding from `webpack` runtime code or not     |
-|  **[`deleteOriginalAssets`](#deleteoriginalassets)**  |      `{Boolean\|'keep-source-map'}`       |           `true`          | Whether to delete the original assets or not                                         |
 
 ### `encoding`
 
@@ -154,7 +153,7 @@ module.exports = {
   plugins: [
     new EncodingPlugin({
       encoding: 'iso-8859-1',
-      filename: "[path][base].iso-8859-1[ext]",
+      filename: "[path][name].iso-8859-1[ext]",
     }),
   ],
 };
@@ -173,10 +172,10 @@ module.exports = {
         // The `pathData` argument contains all placeholders - `path`/`name`/`ext`/etc
         // Available properties described above, for the `String` notation
         if (/\.css$/.test(pathData.file)) {
-          return "assets/stylesheets/[path][base].iso-8859-1[ext]";
+          return "assets/stylesheets/[path][name].iso-8859-1[ext]";
         }
 
-        return "assets/scripts/[path][base].iso-8859-1[ext]";
+        return "assets/scripts/[path][name].iso-8859-1[ext]";
       },
     }),
   ],
@@ -217,40 +216,6 @@ Example Webpack runtime code:
 /******/ 				script = document.createElement('script');
 /******/ 				script.charset = 'iso-8859-1';
 /******/ 				script.timeout = 120;
-```
-
-
-### `deleteOriginalAssets`
-
-Type: `Boolean | 'keep-source-map'`
-Default: `true`
-
-Whether to delete the original assets or not.
-
-**webpack.config.js**
-
-```js
-module.exports = {
-  plugins: [
-    new EncodingPlugin({
-      encoding: 'iso-8859-1',
-      deleteOriginalAssets: false,
-    }),
-  ],
-};
-```
-
-To exclude sourcemaps from encoding
-
-```js
-module.exports = {
-  plugins: [
-    new EncodingPlugin({
-      exclude: /.map$/
-      deleteOriginalAssets: 'keep-source-map',
-    }),
-  ],
-};
 ```
 
 ## webpack-dev-server

@@ -77,19 +77,6 @@
     "patchWebpackBootstrap": {
       "description": "Whether to replace `utf-8` to target encoding from `webpack` runtime code or not.",
       "type": "boolean"
-    },
-    "deleteOriginalAssets": {
-      "description": "Whether to delete the original assets or not.",
-      "anyOf": [
-        {
-          "type": "boolean"
-        },
-        {
-          "enum": [
-            "keep-source-map"
-          ]
-        }
-      ]
     }
   },
   "required": ["encoding"],
