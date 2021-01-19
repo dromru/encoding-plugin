@@ -46,7 +46,7 @@
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
     "@commitlint/prompt": "^11.0.0",
-    "commitizen": "^4.2.2",
+    "commitizen": "^4.2.3",
     "cross-env": "^7.0.3",
     "css-loader": "^5.0.1",
     "eslint": "7.18.0",
