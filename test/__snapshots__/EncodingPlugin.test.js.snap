@@ -43,7 +43,7 @@ exports[`EncodingPlugin \`utf-8\` in runtime scripts related to preload should b
 /******/ 	
 /******/ 	/* webpack/runtime/create fake namespace object */
 /******/ 	(() => {
-/******/ 		var getProto = Object.getPrototypeOf ? (obj) => Object.getPrototypeOf(obj) : (obj) => obj.__proto__;
+/******/ 		var getProto = Object.getPrototypeOf ? (obj) => (Object.getPrototypeOf(obj)) : (obj) => (obj.__proto__);
 /******/ 		var leafPrototypes;
 /******/ 		// create a fake namespace object
 /******/ 		// mode & 1: value is a module id, require it
@@ -107,7 +107,7 @@ exports[`EncodingPlugin \`utf-8\` in runtime scripts related to preload should b
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/load script */
@@ -145,7 +145,7 @@ exports[`EncodingPlugin \`utf-8\` in runtime scripts related to preload should b
 /******/ 				var doneFns = inProgress[url];
 /******/ 				delete inProgress[url];
 /******/ 				script.parentNode && script.parentNode.removeChild(script);
-/******/ 				doneFns && doneFns.forEach((fn) => fn(event));
+/******/ 				doneFns && doneFns.forEach((fn) => (fn(event)));
 /******/ 				if(prev) return prev(event);
 /******/ 			}
 /******/ 			;
@@ -298,6 +298,7 @@ exports[`EncodingPlugin \`utf-8\` in runtime scripts related to preload should b
 /******/ 	})();
 /******/ 	
 /************************************************************************/
+var __webpack_exports__ = {};
 __webpack_require__.e(/* import() */ 48).then(__webpack_require__.t.bind(__webpack_require__, 48, 23));
 
 /******/ })()
@@ -371,7 +372,7 @@ exports[`EncodingPlugin \`utf-8\` in runtime scripts should be replaced 1`] = `
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/load script */
@@ -409,7 +410,7 @@ exports[`EncodingPlugin \`utf-8\` in runtime scripts should be replaced 1`] = `
 /******/ 				var doneFns = inProgress[url];
 /******/ 				delete inProgress[url];
 /******/ 				script.parentNode && script.parentNode.removeChild(script);
-/******/ 				doneFns && doneFns.forEach((fn) => fn(event));
+/******/ 				doneFns && doneFns.forEach((fn) => (fn(event)));
 /******/ 				if(prev) return prev(event);
 /******/ 			}
 /******/ 			;
@@ -533,6 +534,7 @@ exports[`EncodingPlugin \`utf-8\` in runtime scripts should be replaced 1`] = `
 /******/ 	})();
 /******/ 	
 /************************************************************************/
+var __webpack_exports__ = {};
 __webpack_require__.e(/* import() */ 922).then(__webpack_require__.bind(__webpack_require__, 922)).then(console.log);
 
 /******/ })()
@@ -542,6 +544,7 @@ __webpack_require__.e(/* import() */ 922).then(__webpack_require__.bind(__webpac
 exports[`EncodingPlugin default test rule is js/css, emitted files are mjs/css 1`] = `
 "/******/ (() => { // webpackBootstrap
 /******/ 	\\"use strict\\";
+var __webpack_exports__ = {};
 
 
 console.log('привет');
@@ -559,6 +562,7 @@ console.log('привет');
 exports[`EncodingPlugin simple 1`] = `
 "/******/ (() => { // webpackBootstrap
 /******/ 	\\"use strict\\";
+var __webpack_exports__ = {};
 /* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = ((/* unused pure expression or super */ null && ([
   'foo',
   'ифк',
