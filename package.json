@@ -27,7 +27,8 @@
     "lint:all": "yarn lint '**/*.js'",
     "commit": "git-cz",
     "prettify": "prettier",
-    "release": "standard-version"
+    "release": "standard-version",
+    "prepare": "husky install"
   },
   "files": [
     "dist/**/*",
