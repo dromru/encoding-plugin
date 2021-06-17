@@ -65,7 +65,7 @@ describe('EncodingPlugin', () => {
     };
 
     await expect(
-      compile(config).then(readDist('main.js')).then(decode)
+      compile(config).then(readDist('main.js')).then(decode),
     ).resolves.toMatchSnapshot();
   });
 
@@ -75,7 +75,7 @@ describe('EncodingPlugin', () => {
     };
 
     await expect(
-      compile(config).then(readDist('main.js')).then(String)
+      compile(config).then(readDist('main.js')).then(String),
     ).resolves.toMatchSnapshot();
   });
 
@@ -85,7 +85,7 @@ describe('EncodingPlugin', () => {
     };
 
     await expect(
-      compile(config).then(readDist('main.js')).then(String)
+      compile(config).then(readDist('main.js')).then(String),
     ).resolves.toMatchSnapshot();
   });
 
@@ -113,8 +113,8 @@ describe('EncodingPlugin', () => {
         [
           String(readDist(filenameJs)(fs)), // no decoding
           decode(readDist(filenameCss)(fs)),
-        ].join('\n\n')
-      )
+        ].join('\n\n'),
+      ),
     ).resolves.toMatchSnapshot();
   });
 });
