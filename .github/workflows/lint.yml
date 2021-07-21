@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@01aecccf739ca6ff86c0539fbc67a7a5007bbc81
-      - uses: actions/setup-node@c46424eee26de4078d34105d3de3cc4992202b1e
+      - uses: actions/setup-node@aa759c6c94d3800c55b8601f21ba4b2371704cb7
         with:
           node-version: 12
       - name: Get yarn cache directory path
