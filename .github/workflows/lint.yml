@@ -6,7 +6,7 @@ jobs:
   run:
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@01aecccf739ca6ff86c0539fbc67a7a5007bbc81
+      - uses: actions/checkout@25a956c84d5dd820d28caab9f86b8d183aeeff3d
       - uses: actions/setup-node@aa759c6c94d3800c55b8601f21ba4b2371704cb7
         with:
           node-version: 12
