@@ -1,24 +1,15 @@
 name: lint
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   run:
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@01aecccf739ca6ff86c0539fbc67a7a5007bbc81
-      - uses: actions/setup-node@aa759c6c94d3800c55b8601f21ba4b2371704cb7
+      - uses: actions/checkout@v2.3.4
+      - uses: actions/setup-node@v2.3.0
         with:
           node-version: 12
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-      - name: Cache dependencies
-        uses: actions/cache@10906ba9cd642bcc07f0f38a95a57e5c1361d156
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          cache: yarn
       - run: yarn install
       - run: yarn lint:all
