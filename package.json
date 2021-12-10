@@ -37,7 +37,7 @@
   "peerDependencies": {},
   "dependencies": {
     "encoding": "^0.1.13",
-    "schema-utils": "^3.0.0",
+    "schema-utils": "^4.0.0",
     "serialize-javascript": "^6.0.0"
   },
   "devDependencies": {
