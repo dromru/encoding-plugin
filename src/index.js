@@ -210,8 +210,18 @@ class EncodingPlugin {
       );
 
       if (this.options.patchWebpackBootstrap) {
-        ['jsonpScript', 'linkPreload'].forEach((id) => {
-          const hook = compilation.mainTemplate.hooks[id];
+        const isRspack = compiler.rspack;
+
+        const hookNames = isRspack
+          ? ['createScript', 'linkPreload']
+          : ['jsonpScript', 'linkPreload'];
+
+        const hooks = isRspack
+          ? compiler.webpack.RuntimePlugin.getCompilationHooks(compilation)
+          : compilation.mainTemplate.hooks;
+
+        hookNames.forEach((id) => {
+          const hook = hooks[id];
           if (hook) {
             hook.tap(pluginName, (s) =>
               s.replace(/(["'])utf-8["']/gi, `$1${this.options.encoding}$1`),
