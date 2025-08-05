@@ -17,7 +17,7 @@
     "clean": "rimraf dist",
     "prebuild": "yarn clean",
     "build": "cross-env NODE_ENV=production babel src -d dist --copy-files",
-    "test:only": "cross-env NODE_ENV=test jest",
+    "test:only": "cross-env NODE_ENV=test NODE_OPTIONS=\"--openssl-legacy-provider\" jest",
     "test:watch": "yarn test:only --watch",
     "test:coverage": "yarn test:only --collectCoverageFrom=\"src/**/*.js\" --coverage",
     "pretest": "yarn lint",
