@@ -2,11 +2,13 @@
 
  [![codecov](https://codecov.io/gh/dromru/encoding-plugin/branch/master/graph/badge.svg)](https://codecov.io/gh/dromru/encoding-plugin) [![npm](https://img.shields.io/npm/v/encoding-plugin.svg)](https://www.npmjs.com/package/encoding-plugin)
 
-Take control over the encoding of emitted `webpack` assets.
+Take control over the encoding of emitted `webpack` and `rspack` assets.
 This can be useful, if the delivering webserver enforces a specific content-type,
 so that your code is not interpreted as utf-8 by the browser.
 
 > ℹ️ **EncodingPlugin v2 only works with Webpack 5 and above. Use v1 for Webpack <= 4.**
+
+> ℹ️ EncodingPlugin is Rspack compatible.
 
 ## Getting Started
 
