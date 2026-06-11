@@ -4,17 +4,21 @@ on:
   release:
     types: [created]
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4.2.2
-      - uses: actions/setup-node@v4.1.0
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: 20
-          cache: yarn
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false
       - run: yarn install
       - run: yarn test:only --bail --ci
-      - run: yarn publish --non-interactive
-        env:
-          YARN_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: yarn build
+      - run: npm publish

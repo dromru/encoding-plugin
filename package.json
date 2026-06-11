@@ -22,7 +22,6 @@
     "test:coverage": "yarn test:only --collectCoverageFrom=\"src/**/*.js\" --coverage",
     "pretest": "yarn lint",
     "test": "yarn test:coverage",
-    "prepublish": "yarn build",
     "lint": "eslint",
     "lint:all": "yarn lint '**/*.js'",
     "commit": "git-cz",
